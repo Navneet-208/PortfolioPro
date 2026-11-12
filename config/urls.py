@@ -84,7 +84,4 @@ path(
     views.public_resume,
     name='public_resume'
 ),
-
-
-
 ]
