@@ -39,13 +39,19 @@ def edit_project(request, project_id):
         id=project_id,
         user=request.user
     )
+
     if request.method == 'POST':
         form = ProjectForm(request.POST, instance=project)
-    if form.is_valid():
+
+        if form.is_valid():
             form.save()
             return redirect('dashboard')
     else:
         form = ProjectForm(instance=project)
+
+    return render(request, 'accounts/edit_project.html', {
+        'form': form
+    })
 
     return render(request, 'accounts/edit_project.html', {
         'form': form,
