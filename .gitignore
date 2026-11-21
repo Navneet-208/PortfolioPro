@@ -6,6 +6,8 @@ venv/
 staticfiles/
 db.sqlite3
 .env
-.env.*
+!.env.example
 .vscode/
 .idea/
+node_modules/
+.pytest_cache/

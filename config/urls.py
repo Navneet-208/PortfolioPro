@@ -1,87 +1,82 @@
-"""
-URL configuration for config project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+import os
+from pathlib import Path
 from django.contrib import admin
-from django.urls import path, include
-from portfolio import views
+from django.urls import path, include, re_path
+from django.views.generic import TemplateView
+from django.http import JsonResponse, HttpResponse, FileResponse
+from django.conf import settings
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+
+BASE_DIR = settings.BASE_DIR
+
+def api_root_index(request):
+    return JsonResponse({
+        'name': 'PortfolioPro API',
+        'version': '1.0.0',
+        'description': 'Advanced Stock Trading and Portfolio Management Application',
+        'documentation': '/api/docs/',
+        'endpoints': {
+            'auth': '/api/accounts/auth/',
+            'accounts': '/api/accounts/accounts/',
+            'transactions': '/api/accounts/transactions/',
+            'stocks': '/api/stocks/stocks/',
+            'watchlists': '/api/stocks/watchlists/',
+            'trading_orders': '/api/trading/orders/',
+            'trade_executions': '/api/trading/executions/',
+            'portfolio_holdings': '/api/portfolio/holdings/',
+            'portfolio_summary': '/api/portfolio/summary/',
+            'risk_metrics': '/api/risk/metrics/',
+            'risk_limits': '/api/risk/limits/',
+            'risk_audit': '/api/risk/audit/',
+            'technical_analysis': '/api/analysis/technical/{symbol}/',
+            'fundamental_reports': '/api/analysis/fundamentals/',
+            'notifications': '/api/notifications/notifications/',
+            'price_alerts': '/api/notifications/alerts/',
+            'support_tickets': '/api/support/tickets/',
+            'openapi_schema': '/api/schema/',
+            'swagger_ui': '/api/docs/',
+            'redoc': '/api/redoc/'
+        }
+    })
+
+def serve_react_app(request):
+    dist_index = BASE_DIR / 'frontend' / 'dist' / 'index.html'
+    if dist_index.exists():
+        with open(dist_index, 'r', encoding='utf-8') as f:
+            return HttpResponse(f.read(), content_type='text/html')
+    return api_root_index(request)
+
+def serve_react_assets(request, path):
+    asset_file = BASE_DIR / 'frontend' / 'dist' / 'assets' / path
+    if asset_file.exists():
+        content_type = 'application/javascript' if path.endswith('.js') else ('text/css' if path.endswith('.css') else 'application/octet-stream')
+        return FileResponse(open(asset_file, 'rb'), content_type=content_type)
+    return HttpResponse(status=404)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('accounts/', include('accounts.urls')),
-    path('add-project/', views.add_project, name='add_project'),
-    path('edit-project/<int:project_id>/', views.edit_project, name='edit_project'),
-    path('dashboard/', views.dashboard, name='dashboard'),
-    path('add-skill/', views.add_skill, name='add_skill'),
-    path('edit-profile/', views.edit_profile, name='edit_profile'),
-    path('add-education/', views.add_education, name='add_education'),
-path('add-experience/', views.add_experience, name='add_experience'),
 
+    # API Root
+    path('api/', api_root_index, name='api_root'),
 
-path(
-    'edit-skill/<int:skill_id>/',
-    views.edit_skill,
-    name='edit_skill'
-),
+    # Modular API routes
+    path('api/accounts/', include('accounts.urls')),
+    path('api/stocks/', include('stocks.urls')),
+    path('api/trading/', include('trading.urls')),
+    path('api/portfolio/', include('portfolio.urls')),
+    path('api/risk/', include('risk.urls')),
+    path('api/analysis/', include('analysis.urls')),
+    path('api/notifications/', include('notifications.urls')),
+    path('api/support/', include('support.urls')),
 
-path(
-    'delete-skill/<int:skill_id>/',
-    views.delete_skill,
-    name='delete_skill'
-),
+    # OpenAPI 3.0 & Swagger / Redoc Documentation
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 
-path(
-    'delete-project/<int:project_id>/',
-    views.delete_project,
-    name='delete_project'
-),
+    # Serve Vite React Production Assets
+    path('assets/<path:path>', serve_react_assets, name='react_assets'),
 
-
-path(
-    'edit-education/<int:education_id>/',
-    views.edit_education,
-    name='edit_education'
-),
-
-path(
-    'delete-education/<int:education_id>/',
-    views.delete_education,
-    name='delete_education'
-),
-
-path(
-    'edit-experience/<int:experience_id>/',
-    views.edit_experience,
-    name='edit_experience'
-),
-
-path(
-    'delete-experience/<int:experience_id>/',
-    views.delete_experience,
-    name='delete_experience'
-),
-path(
-    'portfolio/<str:username>/',
-    views.public_portfolio,
-    name='public_portfolio'
-),
-
-path(
-    'resume/<str:username>/',
-    views.public_resume,
-    name='public_resume'
-),
+    # React App Entry for Root
+    path('', serve_react_app, name='react_app'),
 ]

@@ -1,0 +1,22 @@
+{
+  "name": "portfoliopro",
+  "version": "1.0.0",
+  "description": "PortfolioPro - Advanced Stock Trading and Portfolio Management Application",
+  "private": true,
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "cd frontend && npm run preview",
+    "test": "pytest"
+  },
+  "keywords": [
+    "trading",
+    "portfolio",
+    "django",
+    "react",
+    "chartjs",
+    "mysql"
+  ],
+  "author": "PortfolioPro Engineering Team",
+  "license": "MIT"
+}
