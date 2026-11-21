@@ -1,0 +1,7 @@
+id,password,last_login,is_superuser,username,first_name,last_name,email,is_staff,is_active,date_joined
+1,pbkdf2_sha256$1000000$ZOUKbEwrjQiAepLEdQrfA7$07/eeJEeWlq+UzUdxNasx5obFyUUbOKozncLoFs6inA=,2026-11-07 16:43:36.022991,1,nikki,,,nikkichauhan208@gmail.com,1,1,2026-11-07 16:31:21.220183
+2,pbkdf2_sha256$1000000$oH0VpwEipOO8TSG5Uw09Ly$Y8CFfxpX1RnRSFu2zCZwIsTkSzeJJfwKkjsbzNXHFPg=,2026-11-09 05:39:34.586334,0,Navneet123,Navneet,Rana,nikkichauhan208@gmail.com,0,1,2026-11-08 01:23:29.635811
+3,pbkdf2_sha256$1000000$bhUiLEPjQH30ZqXdPqUIar$rEklO7A1LOW2GvMphKIFkza+NtFuzx7dSuhpYyiak4k=,2026-11-21 05:27:39.366785,0,trader_demo,Alex,Morgan,trader@portfoliopro.com,0,1,2026-11-20 12:33:08.659806
+4,pbkdf2_sha256$1000000$6KspBPL3xa5qI6um09tn1T$mccNlh4VSqRBITb2YzEQh/yPpVBxwmstp/RPb/FmH5s=,,0,finance_officer,Sarah,Jenkins,officer@portfoliopro.com,0,1,2026-11-20 12:33:08.877250
+5,pbkdf2_sha256$1000000$UeWXjGQ0ijrwpmcJiXsyih$2HRIUfUz7wLw4Ktsx+b2Oha2cM/h5+he1y7sjLgpU9w=,,1,admin,Platform,Admin,admin@portfoliopro.com,1,1,2026-11-20 12:33:09.075506
+6,pbkdf2_sha256$1000000$q9pD45RohuHVyVy2JiLFEo$4q+kn7htme2ohEdHClqY7z0dvnr1ypjzYd+27GcYRG4=,2026-11-21 07:02:34.149255,1,navneet,,,navneet.25m01410016@abes.ac.in,1,1,2026-11-21 06:59:37.020467

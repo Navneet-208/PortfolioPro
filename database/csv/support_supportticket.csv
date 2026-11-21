@@ -1,0 +1,2 @@
+id,ticket_number,subject,category,priority,status,created_at,updated_at,user_id
+1,TKT-100234,Inquiry about Extended Hours Market Orders,TRADING,MEDIUM,IN_PROGRESS,2026-11-20 12:33:11.003658,2026-11-20 12:33:11.003696,3
